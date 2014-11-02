@@ -104,7 +104,8 @@ $('#next').on('click', function(){
     path = $('#url').val().split('=')[0];
     vol = parseInt($('#url').val().split('=')[1]) + 1;
     new_url = path + '=' + vol;
-    $('#url').val(new_url).trigger('change');
+    $('#url').val(path + '=' + vol);
+    getHtml();
 });
 </script>
     </body>
