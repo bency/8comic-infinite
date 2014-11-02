@@ -40,8 +40,8 @@ function hashPosition(p){
 function nn(n){
     return n<10?'00'+n:n<100?'0'+n:n;
 }
-function getImgSrc(c, seriesId){
-    return 'http://img'+replaceCs(c,4,2)+'.8comic.com/'+replaceCs(c,6,1)+'/'+seriesId+'/'+replaceCs(c,0,4)+'/'+nn(loaded)+'_'+replaceCs(c,hashPosition(loaded)+10,3,f)+'.jpg';
+function getImgSrc(chHash, seriesId){
+    return 'http://img'+replaceCs(chHash,4,2)+'.8comic.com/'+replaceCs(chHash,6,1)+'/'+seriesId+'/'+replaceCs(chHash,0,4)+'/'+nn(loaded)+'_'+replaceCs(chHash,hashPosition(loaded)+10,3,f)+'.jpg';
 }
 var loadPic = function(imgHash) {
     // 畫面上緣
@@ -51,27 +51,20 @@ var loadPic = function(imgHash) {
     var btop = $('#content').height() + $('#content').offset().top;
     if (loaded == 1 || btop - wtop < window.innerHeight + 10) {
         f = 50;
-        var url = $('#url').val();
-        if (url.indexOf('m.') == -1) {
-            seriesId = url.split('-')[1].split('.')[0];
-        } else {
-            seriesId = url.split('_')[1].split('.')[0];
-        }
-        ch = parseInt(url.split('=')[1].split('-')[0]) || 1;
         for(var i = 0; i < imgHash.length / f; i++){
             if(replaceCs(imgHash, i * f, 4) == ch) {
-                c = replaceCs(imgHash, i * f, f, f);
+                chHash = replaceCs(imgHash, i * f, f, f);
                 ci = i;
                 break;
             }
         }
 
-        if(c==''){
-            c=replaceCs(imgHash,imgHash.length-f,f);
+        if(chHash == ''){
+            chHash = replaceCs(imgHash,imgHash.length-f,f);
         }
-        total = parseInt(replaceCs(c,7,3));
+        total = parseInt(replaceCs(chHash,7,3));
         if (loaded <= total) {
-            $('#content').append('<img class="center-block" src="' + getImgSrc(c, seriesId) + '" class="img-rounded">').fadeIn();
+            $('#content').append('<img class="center-block" src="' + getImgSrc(chHash, seriesId) + '" class="img-rounded">').fadeIn();
             $('#progress').css('width', (loaded++ / total * 100) + '%');
         }
     }
@@ -79,6 +72,13 @@ var loadPic = function(imgHash) {
 var scrollInit = function(data) {
     if (data) {
         imgHash = data.cs;
+        var url = $('#url').val();
+        if (url.indexOf('m.') == -1) {
+            seriesId = url.split('-')[1].split('.')[0];
+        } else {
+            seriesId = url.split('_')[1].split('.')[0];
+        }
+        ch = parseInt(url.split('=')[1].split('-')[0]) || 1;
         loadPic(imgHash);
         $(window).scroll(loadPic);
     }
@@ -103,8 +103,7 @@ $('#next').on('click', function(){
     path = $('#url').val().split('=')[0];
     vol = parseInt($('#url').val().split('=')[1]) + 1;
     new_url = path + '=' + vol;
-    $('#url').val(new_url);
-    getHtml();
+    $('#url').val(new_url).trigger('change');
 });
 </script>
     </body>
