@@ -79,6 +79,7 @@ var scrollInit = function(data) {
             seriesId = url.split('_')[1].split('.')[0];
         }
         ch = parseInt(url.split('=')[1].split('-')[0]) || 1;
+        document.title = data.title + '-' + ch || document.title;
         loadPic();
         $(window).bind('scroll', loadPic);
     }
