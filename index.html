@@ -29,7 +29,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script>
 var loaded = 1;
-//var imgHash;
+var imgHash;
 function replaceCs(cs,start,count,d){
     var e=cs.substring(start,start+count);
     return d==null?e.replace(/[a-z]*/gi,""):e;
@@ -43,7 +43,7 @@ function nn(n){
 function getImgSrc(chHash, seriesId){
     return 'http://img'+replaceCs(chHash,4,2)+'.8comic.com/'+replaceCs(chHash,6,1)+'/'+seriesId+'/'+replaceCs(chHash,0,4)+'/'+nn(loaded)+'_'+replaceCs(chHash,hashPosition(loaded)+10,3,f)+'.jpg';
 }
-var loadPic = function(imgHash) {
+var loadPic = function() {
     // 畫面上緣
     var wtop = $(window).scrollTop();
 
@@ -79,8 +79,8 @@ var scrollInit = function(data) {
             seriesId = url.split('_')[1].split('.')[0];
         }
         ch = parseInt(url.split('=')[1].split('-')[0]) || 1;
-        loadPic(imgHash);
-        $(window).scroll(loadPic);
+        loadPic();
+        $(window).bind('scroll', loadPic);
     }
 }
 var getHtml = function() {
@@ -100,6 +100,7 @@ var getHtml = function() {
 }
 $('#url').on('change', getHtml);
 $('#next').on('click', function(){
+    $(window).unbind('scroll', loadPic);
     path = $('#url').val().split('=')[0];
     vol = parseInt($('#url').val().split('=')[1]) + 1;
     new_url = path + '=' + vol;
