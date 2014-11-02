@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>8 comic infinite</title>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <a href="#" style="position:fixed;right: 0px;" id='next' class="btn btn-primary">下一話</a>
+            <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">輸入網址</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="url" type="text" placeholder="http://new.comicvip.com/show/cool-653.html?ch=909"/>
+                </div>
+            </div>
+            </form>
+            <div id="content"></div>
+        </div>
+        <div style="bottom:-20px;position:fixed;width: 100%" class="progress">
+            <div id="progress" class="progress-bar progress-bar-info progress-bar-striped" aria-valuemin="0" aria-valuemax="100">
+              <span class="meter" style="width:20%;"></span>
+            </div>
+        </div>
+        <div id="bottom"></div>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script>
+var loaded = 1;
+//var imgHash;
+function replaceCs(cs,start,count,d){
+    var e=cs.substring(start,start+count);
+    return d==null?e.replace(/[a-z]*/gi,""):e;
+}
+function hashPosition(p){
+    return (parseInt((p-1)/10)%10)+(((p-1)%10)*3);
+}
+function nn(n){
+    return n<10?'00'+n:n<100?'0'+n:n;
+}
+function getImgSrc(c, seriesId){
+    return 'http://img'+replaceCs(c,4,2)+'.8comic.com/'+replaceCs(c,6,1)+'/'+seriesId+'/'+replaceCs(c,0,4)+'/'+nn(loaded)+'_'+replaceCs(c,hashPosition(loaded)+10,3,f)+'.jpg';
+}
+var loadPic = function(imgHash) {
+    // 畫面上緣
+    var wtop = $(window).scrollTop();
+
+    // 漫畫底部
+    var btop = $('#content').height() + $('#content').offset().top;
+    if (loaded == 1 || btop - wtop < window.innerHeight + 10) {
+        f = 50;
+        var url = $('#url').val();
+        seriesId = url.split('-')[1].split('.')[0];
+        ch = parseInt(url.split('=')[1].split('-')[0]) || 1;
+        for(var i = 0; i < imgHash.length / f; i++){
+            if(replaceCs(imgHash, i * f, 4) == ch) {
+                c = replaceCs(imgHash, i * f, f, f);
+                ci = i;
+                break;
+            }
+        }
+
+        if(c==''){
+            c=replaceCs(imgHash,imgHash.length-f,f);
+        }
+        ps=parseInt(replaceCs(c,7,3));
+        if (loaded <= ps) {
+            $('#content').append('<img class="center-block" src="' + getImgSrc(c, seriesId) + '" class="img-rounded">').fadeIn();
+            $('#progress').css('width', (loaded / ps * 100) + '%');
+            loaded++;
+        }
+    }
+}
+var scrollInit = function(data) {
+    if (data) {
+        imgHash = data.cs;
+        loadPic(imgHash);
+        $(window).scroll(loadPic);
+    }
+}
+var getHtml = function() {
+    $('img').remove();
+    $('#content').html('<i class="fa fa-cog fa-spin fa-5x"></i>');
+    loaded = 1;
+    var url = $('#url').val();
+    console.log(url);
+    $.ajax({
+        url: '/get_8comic.php',
+        dataType: 'jsonp',
+        data: {url: url, method: 'vol'},
+        jsonp: 'callback',
+        jsonpCallback: 'scrollInit',
+        success: function() {$('i.fa').remove()},
+        error: function() { alert('Failed!'); }
+    });
+}
+$('#url').on('change', getHtml);
+$('#next').on('click', function(){
+    path = $('#url').val().split('=')[0];
+    vol = parseInt($('#url').val().split('=')[1]) + 1;
+    new_url = path + '=' + vol;
+    $('#url').val(new_url);
+    getHtml();
+});
+</script>
+    </body>
+</html>
