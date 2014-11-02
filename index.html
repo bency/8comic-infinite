@@ -69,11 +69,10 @@ var loadPic = function(imgHash) {
         if(c==''){
             c=replaceCs(imgHash,imgHash.length-f,f);
         }
-        ps=parseInt(replaceCs(c,7,3));
-        if (loaded <= ps) {
+        total = parseInt(replaceCs(c,7,3));
+        if (loaded <= total) {
             $('#content').append('<img class="center-block" src="' + getImgSrc(c, seriesId) + '" class="img-rounded">').fadeIn();
-            $('#progress').css('width', (loaded / ps * 100) + '%');
-            loaded++;
+            $('#progress').css('width', (loaded++ / total * 100) + '%');
         }
     }
 }
@@ -88,8 +87,7 @@ var getHtml = function() {
     $('img').remove();
     $('#content').html('<i class="fa fa-cog fa-spin fa-5x"></i>');
     loaded = 1;
-    var url = $('#url').val();
-    console.log(url);
+    url = $('#url').val();
     $.ajax({
         url: '/get_8comic.php',
         dataType: 'jsonp',
