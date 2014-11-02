@@ -52,7 +52,11 @@ var loadPic = function(imgHash) {
     if (loaded == 1 || btop - wtop < window.innerHeight + 10) {
         f = 50;
         var url = $('#url').val();
-        seriesId = url.split('-')[1].split('.')[0];
+        if (url.indexOf('m.') == -1) {
+            seriesId = url.split('-')[1].split('.')[0];
+        } else {
+            seriesId = url.split('_')[1].split('.')[0];
+        }
         ch = parseInt(url.split('=')[1].split('-')[0]) || 1;
         for(var i = 0; i < imgHash.length / f; i++){
             if(replaceCs(imgHash, i * f, 4) == ch) {
