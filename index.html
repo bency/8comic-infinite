@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="container">
-            <a href="#" style="position:fixed;right: 0px;" id='next' class="btn btn-primary">下一話</a>
+            <button style="position:fixed;right: 0px;" id='next' class="btn btn-primary">下一話</button>
             <form class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">輸入網址</label>
@@ -104,8 +104,16 @@ $('#next').on('click', function(){
     path = $('#url').val().split('=')[0];
     vol = parseInt($('#url').val().split('=')[1]) + 1;
     new_url = path + '=' + vol;
-    $('#url').val(path + '=' + vol);
+    location.hash = '#' + new_url;
+    $('#url').val(new_url);
     getHtml();
+});
+$(document).on('ready', function(){
+    url = location.hash.split('#')[1] || null;
+    if (url) {
+        $('#url').val(url);
+        getHtml();
+    }
 });
 </script>
     </body>
