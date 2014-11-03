@@ -1,0 +1,15 @@
+.progress-fixed-bottom {
+    bottom: -20px;
+    position: fixed;
+    width: 100%;
+}
+
+button.next {
+    position:fixed;
+    right: 0px;
+}
+
+.loading-fa {
+    transition: margin-left 10s ease;
+    margin-left: 100%;
+}
