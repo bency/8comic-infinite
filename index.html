@@ -18,7 +18,7 @@
                 </div>
             </div>
             </form>
-            <div id="content"></div>
+            <div id="content"><i id="loading-fa" class="fa fa-cog fa-spin fa-5x"></i></div>
         </div>
         <div class="progress progress-fixed-bottom">
             <div id="progress" class="progress-bar progress-bar-info progress-bar-striped" aria-valuemin="0" aria-valuemax="100">
@@ -87,7 +87,7 @@ var scrollInit = function(data) {
 }
 var getHtml = function() {
     $('img').remove();
-    $('#content').html('<i class="fa fa-cog fa-spin fa-5x"></i>');
+    $('#loading-fa').addClass('loading-fa');
     loaded = 1;
     url = $('#url').val();
     $.ajax({
