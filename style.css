@@ -13,3 +13,6 @@ button.next {
     transition: margin-left 10s ease;
     margin-left: 100%;
 }
+img {
+    width: 100%;
+}
