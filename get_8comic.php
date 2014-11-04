@@ -1,4 +1,5 @@
 <?php
+include 'init.inc.php';
 header("content-type: text/javascript");
 $callback = $_GET['callback'];
 $url = $_GET['url'];
@@ -9,13 +10,14 @@ switch($method) {
         foreach (explode(';', $content) as $data) {
             if (preg_match("/var cs='(.*)'/i", $data, $matches)) {
                 //echo ($matches[1]) . "<br>";
-                $obj->cs = $matches[1];
+                $cs = $matches[1];
                 break;
             }
             if (preg_match("#\<title\>(.*)\<\/title\>#i", $data, $matches)) {
-                $obj->title = explode(' ', $matches[1])[0];
+                $title = explode(' ', $matches[1])[0];
             }
         }
+        $obj = new Comics($cs, $url, $title);
         echo $callback . "(" . json_encode($obj) . ");";
     break;
     case 'intro':

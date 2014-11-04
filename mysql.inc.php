@@ -7,7 +7,7 @@ class Mysql {
     /*
     *   Refenenced by: http://tw1.php.net/manual/en/class.pdo.php#97682
     */
-    public static function get_db(){
+    public static function getDb(){
         if( self::$db ){
             return self::$db;
         }
@@ -16,7 +16,7 @@ class Mysql {
         $passwd = $setting['password'];
         $database = $setting['database'];
         try{
-            self::$db = new PDO( "mysql:host=localhost;dbname=" . $database, $user, $passwd );
+            self::$db = new PDO( "mysql:host=127.0.0.1;dbname=" . $database, $user, $passwd );
         }
         catch ( PDOException $e ){
               print "Error!: " . $e->getMessage() . "<br/>";
