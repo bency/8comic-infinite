@@ -55,12 +55,16 @@ class Comics
         $this->setVolHash();
         $this->total = $this->replaceCs($this->vol_hash, 7, 3);
         for ($i = 1; $i <= $this->total; $i++) {
+            $img_hash = $this->replaceCs($this->vol_hash, $this->getHashPosition($i) + 10, 3, 50);
+            if (strlen($img_hash) == 0) {
+                $this->urls = [];
+                return;
+            }
             $this->urls[] = "http://img" . $this->replaceCs($this->vol_hash, 4, 2) . '.8comic.com/'
                 . $this->replaceCs($this->vol_hash, 6, 1) . '/' . $this->series_id
                 . '/' . $this->replaceCs($this->vol_hash, 0, 4) . '/'
                 . str_pad($i, 3, "0", STR_PAD_LEFT) . '_'
-                . $this->replaceCs($this->vol_hash, $this->getHashPosition($i) + 10, 3, 50)
-                . '.jpg';
+                . $img_hash . '.jpg';
         }
         $this->created_at = time();
         if (!$this->exist()) {
