@@ -20,20 +20,21 @@
         <meta property="fb:admins" content="4215597804921">
         <title>8 comic infinite</title>
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-        <link href="style.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+        <link href="style.css" rel="stylesheet">
     </head>
     <body>
-        <div class="container">
-            <button id='next' class="btn btn-primary next">下一話</button>
-            <form class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">輸入網址</label>
-                <div class="col-sm-8">
-                    <input class="form-control" id="url" type="text" placeholder="http://new.comicvip.com/show/cool-653.html?ch=909"/>
-                </div>
-            </div>
+        <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+            <form class="navbar-form navbar-right">
+                <input id="url" type="text" class="form-control" placeholder="請輸入 8comic 漫畫網址如 http://new.comicvip.com/show/cool-653.html?ch=909">
+                <button id='next' class="btn btn-primary navbar-btn">下一話</button>
             </form>
+        </div>
+        </div>
+        </nav>
+        <div class="container">
             <div id="content"><i id="loading-fa" class="fa fa-cog fa-spin fa-5x"></i></div>
         </div>
         <div class="progress progress-fixed-bottom">
