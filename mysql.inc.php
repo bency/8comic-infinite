@@ -15,8 +15,9 @@ class Mysql {
         $user = $setting['username'];
         $passwd = $setting['password'];
         $database = $setting['database'];
+        $charset = isset($setting['charset']) ? $setting['charset'] : 'utf8';
         try{
-            self::$db = new PDO( "mysql:host=127.0.0.1;dbname=" . $database, $user, $passwd );
+            self::$db = new PDO( "mysql:host=127.0.0.1;dbname=$database;charset=$charset", $user, $passwd );
         }
         catch ( PDOException $e ){
               print "Error!: " . $e->getMessage() . "<br/>";
