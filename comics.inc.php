@@ -43,9 +43,7 @@ class Comics
         $this->total_hash = $total_hash;
         $this->url = $url;
         $this->name = $name;
-        if (!$this->exist()) {
-            $this->save();
-        } else {
+        if ($this->exist()) {
             $this->updateCounter();
         }
         $this->vol = max(explode('-', explode('=', $url)[1])[0], 1);
@@ -65,6 +63,9 @@ class Comics
                 . '.jpg';
         }
         $this->created_at = time();
+        if (!$this->exist()) {
+            $this->save();
+        }
     }
 
     public function exist () {
