@@ -61,10 +61,12 @@ var loadPic = function() {
 
     // 漫畫底部
     var btop = $('#content').height() + $('#content').offset().top;
-    if (loaded == 0 || btop - wtop < window.innerHeight * 2 ) {
+    if ((loaded == 0 || btop - wtop < window.innerHeight * 2)  && data.urls.length > 0) {
         if (loaded < data.total) {
             $('#content').append('<img src="' + data.urls[loaded] + '">').fadeIn();
             $('#progress').css('width', (++loaded / data.total * 100) + '%');
+        } else {
+            $('#next').trigger('click');
         }
     }
 }
@@ -79,7 +81,7 @@ var scrollInit = function(ret) {
     }
 }
 var getHtml = function() {
-    $('img').remove();
+    //$('img').remove();
     $('#loading-fa').addClass('loading-fa');
     loaded = 0;
     url = $('#url').val();
