@@ -65,7 +65,14 @@ var loadPic = function() {
             $('#content').append('<img src="' + data.urls[loaded] + '">').fadeIn();
             $('#progress').css('width', (++loaded / data.total * 100) + '%');
         } else {
-            $('#next').trigger('click');
+            $(window).unbind('scroll', loadPic);
+            $('img').remove();
+            path = $('#url').val().split('=')[0];
+            vol = parseInt($('#url').val().split('=')[1]) + 1;
+            new_url = path + '=' + vol;
+            location.hash = '#' + new_url;
+            $('#url').val(new_url);
+            getHtml();
         }
     }
 }
