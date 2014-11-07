@@ -9,7 +9,6 @@ switch($method) {
     case 'vol':
         foreach (explode(';', $content) as $data) {
             if (preg_match("/var cs='(.*)'/i", $data, $matches)) {
-                //echo ($matches[1]) . "<br>";
                 $cs = $matches[1];
                 break;
             }
@@ -17,8 +16,7 @@ switch($method) {
                 $title = explode(' ', $matches[1])[0];
             }
         }
-        $obj = new Comics($cs, $url, $title);
-        echo $callback . "(" . json_encode($obj) . ");";
+        echo $callback . "(" . json_encode(new Comics($cs, $url, $title)) . ");";
     break;
     case 'intro':
     break;
