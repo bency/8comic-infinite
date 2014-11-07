@@ -50,7 +50,9 @@ class Comics
         if (preg_match('/http:\/\/m./', $url)) {
             $this->series_id = explode('.', explode('_', $url)[1])[0];
         } else {
-            $this->series_id = explode('.', explode('-', $url)[1])[0];
+            $dash_split = explode('-', $url);
+            $series_html = $dash_split[count($dash_split) - 1];
+            $this->series_id = explode('.', $series_html)[0];
         }
         $this->setVolHash();
         $this->total = $this->replaceCs($this->vol_hash, 7, 3);
