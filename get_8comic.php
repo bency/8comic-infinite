@@ -23,4 +23,3 @@ switch($method) {
     case 'intro':
     break;
 }
-//echo $callback . '(' . json_encode($urls) . ');';
