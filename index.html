@@ -60,13 +60,12 @@ var loadPic = function() {
 
     // 漫畫底部
     var btop = $('#content').height() + $('#content').offset().top;
-    if ((loaded == 0 || btop - wtop < window.innerHeight * 2)  && data.urls.length > 0) {
+    if ((loaded == 0 || btop - wtop < window.innerHeight * 1.2)  && data.urls.length > 0) {
         if (loaded < data.total) {
-            $('#content').append('<img src="' + data.urls[loaded] + '">').fadeIn();
+            $('img:hidden').first().fadeIn(1000);
             $('#progress').css('width', (++loaded / data.total * 100) + '%');
         } else {
             $(window).unbind('scroll', loadPic);
-            $('img').remove();
             path = $('#url').val().split('=')[0];
             vol = parseInt($('#url').val().split('=')[1]) + 1;
             new_url = path + '=' + vol;
@@ -81,13 +80,16 @@ var scrollInit = function(ret) {
         data = ret;
         document.title = data.name + '-' + data.vol || document.title;
         $('#brand-title').text(document.title);
-        loadPic();
-        loadPic();
-        $(window).bind('scroll', loadPic);
+        for (i=0; i < 3; i++) {
+            $('#content').append('<img src="' + data.urls[i] + '">');
+        }
+        for (; i < data.urls.length; i++) {
+            $('#content').append('<img style="display:none;" src="' + data.urls[i] + '">');
+        }
+        $(window).on('scroll', loadPic);
     }
 }
 var getHtml = function() {
-    //$('img').remove();
     $('#loading-fa').addClass('loading-fa');
     loaded = 0;
     url = $('#url').val();
@@ -97,8 +99,7 @@ var getHtml = function() {
         data: {url: url, method: 'vol'},
         jsonp: 'callback',
         jsonpCallback: 'scrollInit',
-        success: function() {$('i.fa').remove()},
-        error: function() { alert('Failed!'); }
+        success: function() {$('i.fa').remove()}
     });
 }
 $('#url').on('change', getHtml);
