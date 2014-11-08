@@ -102,7 +102,10 @@ var getHtml = function() {
         success: function() {$('i.fa').remove()}
     });
 }
-$('#url').on('change', getHtml);
+$('#url').on('change', function(){
+    $('img').remove();
+    getHtml();
+});
 $('#next').on('click', function(){
     $(window).unbind('scroll', loadPic);
     $('img').remove();
