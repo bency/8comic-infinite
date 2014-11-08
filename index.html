@@ -63,6 +63,9 @@ var loadPic = function() {
     if ((loaded == 0 || btop - wtop < window.innerHeight * 1.2)  && data.urls.length > 0) {
         if (loaded < data.total) {
             $('img:hidden').first().fadeIn(1000);
+            if (data.urls.length > 0) {
+                $('#content').append('<img style="display:none;" src="' + data.urls.pop() + '">');
+            }
             $('#progress').css('width', (++loaded / data.total * 100) + '%');
         } else {
             $(window).unbind('scroll', loadPic);
@@ -78,13 +81,11 @@ var loadPic = function() {
 var scrollInit = function(ret) {
     if (ret) {
         data = ret;
+        data.urls.reverse();
         document.title = data.name + '-' + data.vol || document.title;
         $('#brand-title').text(document.title);
         for (i=0; i < 3; i++) {
-            $('#content').append('<img src="' + data.urls[i] + '">');
-        }
-        for (; i < data.urls.length; i++) {
-            $('#content').append('<img style="display:none;" src="' + data.urls[i] + '">');
+            $('#content').append('<img src="' + data.urls.pop() + '">');
         }
         $(window).on('scroll', loadPic);
     }
