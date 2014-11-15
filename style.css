@@ -16,3 +16,7 @@
 img {
     width: 100%;
 }
+
+body {
+    padding-top: 65px;
+}
