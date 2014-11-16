@@ -64,7 +64,7 @@ var loadPic = function() {
         if (loaded < data.total) {
             $('img:hidden').first().fadeIn(1000);
             if (data.urls.length > 0) {
-                $('#content').append('<img style="display:none;" src="' + data.urls.pop() + '">');
+                $('#content').append('<img style="display:none;" src="' + data.urls.pop() + '"><hr>');
             }
             $('#progress').css('width', (++loaded / data.total * 100) + '%');
         } else {
@@ -85,7 +85,7 @@ var scrollInit = function(ret) {
         document.title = data.name + '-' + data.vol || document.title;
         $('#brand-title').text(document.title);
         for (i=0; i < 3; i++) {
-            $('#content').append('<img src="' + data.urls.pop() + '">');
+            $('#content').append('<img src="' + data.urls.pop() + '"><hr>');
         }
         loaded = 3;
         $(window).on('scroll', loadPic);
