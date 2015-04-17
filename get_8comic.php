@@ -29,6 +29,6 @@ switch($method) {
         echo $callback . "(" . json_encode($comic) . ");";
     break;
     case '8comic':
-        echo $callback . "({$commic->series_id}, {$comic->total_hash}, {$comic->vol});";
+        echo $callback . "({$comic->series_id}, {$comic->total_hash}, {$comic->vol});";
     break;
 }
