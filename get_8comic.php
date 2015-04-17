@@ -1,6 +1,5 @@
 <?php
 include 'init.inc.php';
-header("content-type: text/javascript");
 $callback = $_GET['callback'];
 $url = $_GET['url'];
 $method = $_GET['method'];
@@ -26,9 +25,11 @@ switch($method) {
                 $title = explode(' ', $matches[1])[0];
             }
         }
+        header("content-type: text/javascript");
         echo $callback . "(" . json_encode($comic) . ");";
     break;
     case '8comic':
+        header("content-type: text/javascript");
         echo $callback . "({$comic->series_id}, '{$comic->total_hash}', {$comic->vol});console.log('fdsafd')";
     break;
 }
