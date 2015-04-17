@@ -32,4 +32,8 @@ switch($method) {
         header("content-type: text/javascript");
         echo $callback . "({$comic->series_id}, '{$comic->total_hash}', {$comic->vol});console.log('fdsafd')";
     break;
+    case 'json':
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($comic->urls);
+    break;
 }
