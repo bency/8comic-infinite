@@ -34,6 +34,6 @@ switch($method) {
     break;
     case 'json':
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($comic->urls);
+        echo json_encode($comic);
     break;
 }
