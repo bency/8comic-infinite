@@ -25,17 +25,14 @@
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="visible-xs url form-control" placeholder="請輸入 8comic 漫畫網址如 http://new.comicvip.com/show/cool-653.html?ch=909">
+            </form>
             <a id="brand-title" class="navbar-brand" href="#"></a>
         </div>
         <div class="collapse navbar-collapse"  id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-right">
-                <input id="url" type="text" class="form-control" placeholder="請輸入 8comic 漫畫網址如 http://new.comicvip.com/show/cool-653.html?ch=909">
+                <input type="text" id="url" class="url form-control" placeholder="請輸入 8comic 漫畫網址如 http://new.comicvip.com/show/cool-653.html?ch=909">
                 <button id='next' class="btn btn-primary navbar-btn">下一話</button>
             </form>
         </div>
@@ -69,11 +66,11 @@ var loadPic = function() {
             $('#progress').css('width', (++loaded / data.total * 100) + '%');
         } else {
             $(window).unbind('scroll', loadPic);
-            path = $('#url').val().split('=')[0];
-            vol = parseInt($('#url').val().split('=')[1]) + 1;
+            path = $('.url:visible').val().split('=')[0];
+            vol = parseInt($('.url:visible').val().split('=')[1]) + 1;
             new_url = path + '=' + vol;
             location.hash = '#' + new_url;
-            $('#url').val(new_url);
+            $('.url:visible').val(new_url);
             getHtml();
         }
     }
@@ -94,9 +91,9 @@ var scrollInit = function(ret) {
 var getHtml = function() {
     $('#loading-fa').addClass('loading-fa');
     loaded = 0;
-    url = $('#url').val();
+    url = $('.url:visible').val();
     $.ajax({
-        url: '/get_8comic.php',
+        url: 'http://infinite.bency.org/get_8comic.php',
         dataType: 'jsonp',
         data: {url: url, method: 'vol'},
         jsonp: 'callback',
@@ -104,26 +101,26 @@ var getHtml = function() {
         success: function() {$('i.fa').remove()}
     });
 }
-$('#url').on('change', function(){
+$('.url:visible').on('change', function(){
     $('img').remove();
     getHtml();
 });
 $('#next').on('click', function(){
     $(window).unbind('scroll', loadPic);
     $('img').remove();
-    path = $('#url').val().split('=')[0];
+    path = $('.url:visible').val().split('=')[0];
     // FIXME
-    vol = parseInt($('#url').val().split('=')[1]) || 0;
+    vol = parseInt($('.url:visible').val().split('=')[1]) || 0;
     vol++;
     new_url = path + '=' + vol;
     location.hash = '#' + new_url;
-    $('#url').val(new_url);
+    $('.url:visible').val(new_url);
     getHtml();
 });
 $(document).on('ready', function(){
     url = location.hash.split('#')[1] || null;
     if (url) {
-        $('#url').val(url);
+        $('.url:visible').val(url);
         getHtml();
     }
 });
