@@ -61,8 +61,8 @@ var loadPic = function() {
     // 漫畫底部
     var btop = $('#content').height() + $('#content').offset().top;
     if ((loaded == 0 || btop - wtop < window.innerHeight * 1.2)  && data.total > 0) {
-        if (loaded < data.total) {
-            $('img:hidden').first().fadeIn(1000);
+        $('img:hidden').first().fadeIn(1000);
+        if (loaded < data.total && $('img:hidden').length == 0) {
             if (data.urls.length > 0) {
                 $('#content').append('<img style="display:none;" src="' + data.urls.pop() + '"><hr>');
             }
