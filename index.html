@@ -28,7 +28,7 @@
             <form class="navbar-form navbar-right">
                 <input type="text" class="visible-xs url form-control" placeholder="請輸入 8comic 漫畫網址如 http://new.comicvip.com/show/cool-653.html?ch=909">
             </form>
-            <a id="brand-title" class="navbar-brand" href="#"></a>
+            <a id="brand-title" style="display:none;" class="navbar-brand" href="#"></a>
         </div>
         <div class="collapse navbar-collapse"  id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-right">
@@ -81,6 +81,7 @@ var scrollInit = function(ret) {
         data.urls.reverse();
         document.title = data.name + '-' + data.vol || document.title;
         $('#brand-title').text(document.title);
+        $('#brand-title').show();
         for (i=0; i < 3; i++) {
             $('#content').append('<img src="' + data.urls.pop() + '"><hr>');
         }
